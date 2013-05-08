@@ -664,7 +664,7 @@ namespace net.openstack.Providers.Rackspace
                 headers = new Dictionary<string, string>();
             }
 
-            headers.Add(ContentLength, 0)
+            headers.Add(ContentLength, 0);
             headers.Add(CopyFrom, string.Format("{0}/{1}", sourceContainer, sourceObjectName));
 
             var urlPath = new Uri(string.Format("{0}/{1}/{2}", GetServiceEndpointCloudFiles(identity, region, useInternalUrl), _encodeDecodeProvider.UrlEncode(destinationContainer), _encodeDecodeProvider.UrlEncode(destinationObjectName)));
