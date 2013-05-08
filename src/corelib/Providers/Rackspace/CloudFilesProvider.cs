@@ -659,22 +659,12 @@ namespace net.openstack.Providers.Rackspace
             _cloudFilesValidator.ValidateContainerName(destinationContainer);
             _cloudFilesValidator.ValidateObjectName(destinationObjectName);
 
-            if (headers != null)
-            {
-                if (string.IsNullOrWhiteSpace(headers.FirstOrDefault(x => x.Key.Equals(ContentLength, StringComparison.OrdinalIgnoreCase)).Value))
-                {
-                    var contentLength = GetObjectContentLength(identity, sourceContainer, sourceObjectName, region, useInternalUrl);
-                    headers.Add(ContentLength, contentLength);
-                }
-            }
-            else
+            if (headers == null)
             {
                 headers = new Dictionary<string, string>();
-                var contentLength = GetObjectContentLength(identity, sourceContainer, sourceObjectName, region, useInternalUrl);
-                headers.Add(ContentLength, contentLength);
-
             }
 
+            headers.Add(ContentLength, 0);
             headers.Add(CopyFrom, string.Format("{0}/{1}", sourceContainer, sourceObjectName));
 
             var urlPath = new Uri(string.Format("{0}/{1}/{2}", GetServiceEndpointCloudFiles(identity, region, useInternalUrl), _encodeDecodeProvider.UrlEncode(destinationContainer), _encodeDecodeProvider.UrlEncode(destinationObjectName)));
