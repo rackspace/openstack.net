@@ -64,6 +64,7 @@
     <Compile Include="Providers\Rackspace\IdentityProviderCacheTests.cs" />
     <Compile Include="Providers\Rackspace\ObjectProviderHelperTests.cs" />
     <Compile Include="Providers\Rackspace\ProviderBaseTests.cs" />
+    <Compile Include="Providers\Rackspace\CloudDnsValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
