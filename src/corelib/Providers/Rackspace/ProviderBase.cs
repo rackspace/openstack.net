@@ -173,7 +173,7 @@ namespace net.openstack.Providers.Rackspace
                     throw new NoDefaultRegionSetException("No region was provided and there is no default region set for the user's account.");
             }
 
-            var endpoint = serviceDetails.Endpoints.FirstOrDefault(e => e.Region.Equals(region, StringComparison.OrdinalIgnoreCase)) ??
+            var endpoint = serviceDetails.Endpoints.FirstOrDefault(e => e.Region != null && e.Region.Equals(region, StringComparison.OrdinalIgnoreCase)) ??
                            serviceDetails.Endpoints.FirstOrDefault(e => string.IsNullOrWhiteSpace(e.Region));
 
             if (endpoint == null)
