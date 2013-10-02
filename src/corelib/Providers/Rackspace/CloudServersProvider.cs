@@ -203,6 +203,9 @@ namespace net.openstack.Providers.Rackspace
                     networksToAttach.Add("11111111-1111-1111-1111-111111111111");
             }
 
+            if (networks != null && networks.Any())
+                networksToAttach.AddRange(networks.Select(guid => guid.ToString()));
+
             const string accessIPv4 = null;
             const string accessIPv6 = null;
             var request = new CreateServerRequest(cloudServerName, imageName, flavor, diskConfig, metadata, accessIPv4, accessIPv6, networksToAttach, personality);
