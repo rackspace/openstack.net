@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace net.openstack.Core.Domain
 {
@@ -25,12 +26,14 @@ namespace net.openstack.Core.Domain
         public string AccessIPv6 { get; set; }
 
         [DataMember]
+        [JsonConverter(typeof(EmptyStringIsNullJsonConverter<Metadata>))]
         public Metadata Metadata { get; set; }
 
         [DataMember(Name = "user_id")]
         public string UserId { get; set; }
 
         [DataMember]
+        [JsonConverter(typeof(EmptyStringIsNullJsonConverter<ServerImage>))]
         public ServerImage Image { get; set; }
 
         [DataMember]
@@ -72,5 +75,32 @@ namespace net.openstack.Core.Domain
 
         [DataMember]
         public string Name { get; set; }
+    }
+
+    public class EmptyStringIsNullJsonConverter<T> : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            if (objectType == typeof(T))
+                return true;
+
+            return false;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (objectType == typeof(T))
+            {
+                if (reader.TokenType == JsonToken.String && string.Empty.Equals(reader.Value))
+                    return null;
+            }
+
+            return serializer.Deserialize<T>(reader);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
     }
 }
