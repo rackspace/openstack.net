@@ -343,6 +343,40 @@ namespace net.openstack.Providers.Rackspace
             return response.Data.Tenants;
         }
 
+        public virtual IEnumerable<ExtendedEndpoint> ListServiceCatalogEndpoints(string tenantId, CloudIdentity identity)
+        {
+            var response = ExecuteRESTRequest<ListEndpointsResponse>(identity, string.Format("/v2.0/tenants/{0}/OS-KSCATALOG/endpoints", tenantId), HttpMethod.GET);
+            
+            if (response == null || response.Data == null)
+                return null;
+            
+            return response.Data.Endpoints;
+        }
+
+        public virtual ExtendedEndpoint GetServiceCatalogEndpoint(string tenantId, string endpointId, CloudIdentity identity)
+        {
+            var response = ExecuteRESTRequest<GetEndpointResponse>(identity, string.Format("/v2.0/tenants/{0}/OS-KSCATALOG/endpoints/{1}", tenantId, endpointId), HttpMethod.GET);
+            
+            if (response == null || response.Data == null)
+                return null;
+            
+            return response.Data.Endpoint;
+        }
+
+        public virtual ExtendedEndpoint AddServiceCatalogEndpoint(string tenantId, string endpointTemplateId, CloudIdentity identity)
+        {
+            var response = ExecuteRESTRequest<GetEndpointResponse>(identity, string.Format("/v2.0/tenants/{0}/OS-KSCATALOG/endpoints", tenantId), HttpMethod.POST, new AddServiceCatalogEndpointRequest(new EndpointTemplate(endpointTemplateId)));
+            if (response == null || response.Data == null)
+                return null;
+            
+            return response.Data.Endpoint;
+        }
+
+        public virtual bool DeleteServiceCatalogEndpoint(string tenantId, string endpointId, CloudIdentity identity)
+        {
+            Response response = this.ExecuteRESTRequest(identity, string.Format("/v2.0/tenants/{0}/OS-KSCATALOG/endpoints/{1}", tenantId, endpointId), HttpMethod.DELETE);
+            return response != null || response.StatusCode == 204;
+        }
         #endregion
 
         #region Token and Authentication
