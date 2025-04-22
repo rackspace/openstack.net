@@ -77,4 +77,6 @@ docs/html/
 
 #NuGet
 *.nupkg
-/src/packages/
+src/packages/
+.vs/
+src/UpgradeLog.htm

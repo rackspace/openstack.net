@@ -1713,7 +1713,6 @@
                     archive.RootPath = Path.GetDirectoryName(Path.GetFullPath(sourceFileName)).Replace('\\', '/');
                     TarEntry entry = TarEntry.CreateEntryFromFile(sourceFileName);
                     archive.WriteEntry(entry, true);
-                    archive.Close();
                 }
 
                 outputStream.Flush();
@@ -1769,7 +1768,6 @@
                         archive.RootPath = Path.GetDirectoryName(Path.GetFullPath(sourceFileName)).Replace('\\', '/');
                         TarEntry entry = TarEntry.CreateEntryFromFile(sourceFileName);
                         archive.WriteEntry(entry, true);
-                        archive.Close();
                     }
                 }
 
@@ -1825,7 +1823,6 @@
                         archive.RootPath = Path.GetDirectoryName(Path.GetFullPath(sourceFileName)).Replace('\\', '/');
                         TarEntry entry = TarEntry.CreateEntryFromFile(sourceFileName);
                         archive.WriteEntry(entry, true);
-                        archive.Close();
                     }
                 }
 
@@ -1884,7 +1881,6 @@
                         tarOutputStream.PutNextEntry(entry);
                         tarOutputStream.Write(content, 0, content.Length);
                         tarOutputStream.CloseEntry();
-                        tarOutputStream.Close();
                     }
                 }
 
